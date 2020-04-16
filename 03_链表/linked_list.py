@@ -3,8 +3,8 @@
 
 class Node():
     def __init__(self, value=None, next=None):
-        self._value = value
-        self._next = next
+        self.value = value
+        self.next = next
 
     def __str__(self):
         return '<Node: value:{}, next:{}>'.format(self.value, self.next)
@@ -52,7 +52,7 @@ class LinkedList():
         self.root.next = node
         self.length += 1
 
-    def iter_node():
+    def iter_node(self):
         curnode = self.root.next
         while curnode is not self.tailnode:
             yield curnode
@@ -75,10 +75,11 @@ class LinkedList():
                 if curnode is self.tailnode:
                     if prevnode is self.root:
                         self.tailnode = None
-                     else:
+                    else:
                         self.tailnode = prevnode
                 del curnode
                 self.length -= 1
+                return 1
             else:
                 prevnode = curnode
         return -1
@@ -87,7 +88,7 @@ class LinkedList():
         index = 0
         for curnode in self.iter_node():
             if curnode.value == value:
-                yield index
+                return  index
             else:
                 index += 1
         return -1
@@ -108,9 +109,9 @@ class LinkedList():
 
     def clear(self):
         for node in self.iter_node():
-            self.root.next = Node
+            self.root.next = None
             self.length = 0
-            self.tailnode = Node
+            self.tailnode = None
 
     def reverse(self):
         """反转链表"""
@@ -127,3 +128,21 @@ class LinkedList():
             curnode = nextnode
 
 
+def test_linkedlist():
+    ll = LinkedList()
+
+    ll.append(0)
+    ll.append(1)
+    ll.append(2)
+    ll.append(3)
+
+    assert len(ll) == 4
+    assert ll.find(2) == 2
+    assert ll.find(-1) == -1
+
+    assert ll.remove(0) == 1
+    assert ll.remove(10) == -1
+    assert ll.remove(2) == 1
+    assert len(ll) == 2
+    assert list(ll) == [1, 3]
+    assert ll.find(0) == -1
