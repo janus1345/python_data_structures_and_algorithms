@@ -57,7 +57,7 @@ class LinkedList():
         while curnode is not self.tailnode:
             yield curnode
             curnode = curnode.next
-        if curnode is not Node:
+        if curnode is not None:
             yield curnode
 
 
@@ -146,3 +146,53 @@ def test_linkedlist():
     assert len(ll) == 2
     assert list(ll) == [1, 3]
     assert ll.find(0) == -1
+
+    ll.appendleft(0)
+    assert list(ll) == [0, 1, 3]
+    assert len(ll) == 3
+
+    headvalue = ll.popleft()
+    assert headvalue == 0
+    assert len(ll) == 2
+    assert list(ll) == [1, 3]
+
+    assert ll.popleft() == 1
+    assert list(ll) == [3]
+    ll.popleft()
+    assert len(ll) == 0
+    assert ll.tailnode is None
+
+    ll.clear()
+    assert len(ll) == 0
+    assert list(ll) == []
+
+def test_linked_list_remove():
+    ll = LinkedList()
+    ll.append(3)
+    ll.append(4)
+    ll.append(5)
+    ll.remove(4)
+    print(list(ll))
+
+
+def test_single_node():
+    ll = LinkedList()
+    ll.append(0)
+    ll.remove(0)
+    ll.appendleft(1)
+    assert list(ll) == [1]
+
+def test_linked_list_reverse():
+    ll = LinkedList()
+    n = 10
+    for i in range(n):
+        ll.append(i)
+    ll.reverse()
+    assert list(ll) == list(reversed(range(n)))
+
+def test_linked_list_append():
+    ll = LinkedList()
+    ll.appendleft(1)
+    ll.append(2)
+    assert list(ll) == [1, 2]
+
